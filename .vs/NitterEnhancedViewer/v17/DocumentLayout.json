@@ -1,0 +1,85 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{543A2801-65D7-4F4F-984E-1474A213DFAF}|NitterEnhancedViewer\\NitterEnhancedViewer.csproj|c:\\users\\johma\\riderprojects\\nitterenhancedviewer\\nitterenhancedviewer\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{543A2801-65D7-4F4F-984E-1474A213DFAF}|NitterEnhancedViewer\\NitterEnhancedViewer.csproj|solutionrelative:nitterenhancedviewer\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{543A2801-65D7-4F4F-984E-1474A213DFAF}|NitterEnhancedViewer\\NitterEnhancedViewer.csproj|c:\\users\\johma\\riderprojects\\nitterenhancedviewer\\nitterenhancedviewer\\lib\\gui\\windowcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{543A2801-65D7-4F4F-984E-1474A213DFAF}|NitterEnhancedViewer\\NitterEnhancedViewer.csproj|solutionrelative:nitterenhancedviewer\\lib\\gui\\windowcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{543A2801-65D7-4F4F-984E-1474A213DFAF}|NitterEnhancedViewer\\NitterEnhancedViewer.csproj|c:\\users\\johma\\riderprojects\\nitterenhancedviewer\\nitterenhancedviewer\\lib\\fs\\jsoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{543A2801-65D7-4F4F-984E-1474A213DFAF}|NitterEnhancedViewer\\NitterEnhancedViewer.csproj|solutionrelative:nitterenhancedviewer\\lib\\fs\\jsoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{543A2801-65D7-4F4F-984E-1474A213DFAF}|NitterEnhancedViewer\\NitterEnhancedViewer.csproj|c:\\users\\johma\\riderprojects\\nitterenhancedviewer\\nitterenhancedviewer\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{543A2801-65D7-4F4F-984E-1474A213DFAF}|NitterEnhancedViewer\\NitterEnhancedViewer.csproj|solutionrelative:nitterenhancedviewer\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\NitterEnhancedViewer\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "NitterEnhancedViewer\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\NitterEnhancedViewer\\MainWindow.xaml.cs",
+              "RelativeToolTip": "NitterEnhancedViewer\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-12T08:33:47.932Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WindowController.cs",
+              "DocumentMoniker": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\NitterEnhancedViewer\\lib\\gui\\WindowController.cs",
+              "RelativeDocumentMoniker": "NitterEnhancedViewer\\lib\\gui\\WindowController.cs",
+              "ToolTip": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\NitterEnhancedViewer\\lib\\gui\\WindowController.cs",
+              "RelativeToolTip": "NitterEnhancedViewer\\lib\\gui\\WindowController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-12T08:33:43.731Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "JsonController.cs",
+              "DocumentMoniker": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\NitterEnhancedViewer\\lib\\fs\\JsonController.cs",
+              "RelativeDocumentMoniker": "NitterEnhancedViewer\\lib\\fs\\JsonController.cs",
+              "ToolTip": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\NitterEnhancedViewer\\lib\\fs\\JsonController.cs",
+              "RelativeToolTip": "NitterEnhancedViewer\\lib\\fs\\JsonController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-12T08:33:29.55Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\NitterEnhancedViewer\\App.xaml.cs",
+              "RelativeDocumentMoniker": "NitterEnhancedViewer\\App.xaml.cs",
+              "ToolTip": "C:\\Users\\Johma\\RiderProjects\\NitterEnhancedViewer\\NitterEnhancedViewer\\App.xaml.cs",
+              "RelativeToolTip": "NitterEnhancedViewer\\App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-12T08:33:26.091Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

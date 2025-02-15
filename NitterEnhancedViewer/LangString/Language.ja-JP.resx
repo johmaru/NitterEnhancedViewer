@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="S_Settings" xml:space="preserve">
+        <value>設定</value>
+    </data>
+    <data name="S_Application" xml:space="preserve">
+        <value>アプリケーション</value>
+    </data>
+    <data name="S_General" xml:space="preserve">
+        <value>一般</value>
+    </data>
+    <data name="S_View" xml:space="preserve">
+        <value>外見</value>
+    </data>
+    <data name="S_Account" xml:space="preserve">
+        <value>アカウント</value>
+    </data>
+    <data name="S_StartMinimized" xml:space="preserve">
+        <value>起動時最小化</value>
+    </data>
+    <data name="S_MemoryTab" xml:space="preserve">
+        <value>タブを記憶する</value>
+    </data>
+    <data name="S_Language" xml:space="preserve">
+        <value>言語</value>
+    </data>
+    <data name="S_Theme" xml:space="preserve">
+        <value>テーマ</value>
+    </data>
+    <data name="S_DockColor" xml:space="preserve">
+        <value>ドックカラー</value>
+    </data>
+    <data name="M_DidntXaccountSetting" xml:space="preserve">
+        <value>Xaccountが設定されていません</value>
+    </data>
+    <data name="M_AskOpenSetting" xml:space="preserve">
+        <value>今すぐセッティングを開きますか？</value>
+    </data>
+    <data name="S_AccountName" xml:space="preserve">
+        <value>アカウント名</value>
+    </data>
+    <data name="S_AccountPassword" xml:space="preserve">
+        <value>アカウントパスワード</value>
+    </data>
+    <data name="M_OK" xml:space="preserve">
+        <value>承認</value>
+    </data>
+    <data name="ST_WarningUseXAccount" xml:space="preserve">
+        <value>このオープンソースアプリケーションはXaccountの情報収集を一切行いません。それでもユーザー名とパスワードを入力するのに抵抗が有る方はご利用しないことをおすすめします。</value>
+    </data>
+    <data name="S_LoginX" xml:space="preserve">
+        <value>Xにログインする</value>
+    </data>
+    <data name="S_Login" xml:space="preserve">
+        <value>ログイン</value>
+    </data>
+    <data name="S_Profile" xml:space="preserve">
+        <value>プロフィール</value>
+    </data>
+</root>
