@@ -78,11 +78,29 @@ namespace NitterEnhancedViewer.LangString {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 設定ウィンドウでのXのログインが完了していません.
+        /// </summary>
+        public static string M_NotXLoginOnSetting {
+            get {
+                return ResourceManager.GetString("M_NotXLoginOnSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 承認.
         /// </summary>
         public static string M_OK {
             get {
                 return ResourceManager.GetString("M_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xにログイン済みです.
+        /// </summary>
+        public static string M_XAlreadyloggin {
+            get {
+                return ResourceManager.GetString("M_XAlreadyloggin", resourceCulture);
             }
         }
         
@@ -209,6 +227,15 @@ namespace NitterEnhancedViewer.LangString {
         public static string S_Theme {
             get {
                 return ResourceManager.GetString("S_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ツイートする.
+        /// </summary>
+        public static string S_Tweet {
+            get {
+                return ResourceManager.GetString("S_Tweet", resourceCulture);
             }
         }
         

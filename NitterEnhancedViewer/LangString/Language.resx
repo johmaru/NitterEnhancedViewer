@@ -75,4 +75,13 @@
     <data name="S_Profile" xml:space="preserve">
         <value>Profile</value>
     </data>
+    <data name="S_Tweet" xml:space="preserve">
+        <value>Tweet</value>
+    </data>
+    <data name="M_NotXLoginOnSetting" xml:space="preserve">
+        <value>You aren't complete XLogin on setting</value>
+    </data>
+    <data name="M_XAlreadyloggin" xml:space="preserve">
+        <value>Already logged in to X</value>
+    </data>
 </root>

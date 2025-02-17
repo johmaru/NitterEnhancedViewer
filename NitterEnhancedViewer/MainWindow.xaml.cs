@@ -126,8 +126,22 @@ public partial class MainWindow : FluentWindow
                     e.preventDefault();
                     window.chrome.webview.postMessage('profile');
                 }};
+
+                const TweetItem = document.createElement('div');
+                TweetItem.className = 'nav-item';
+                const TweetLink = document.createElement('a');
+                TweetLink.href = '#';
+                TweetLink.textContent = '{LanguageController.GetLocalizedValue<string>("S_Tweet")}';
+                TweetLink.onclick = (e) => {{
+                    e.preventDefault();
+                    window.chrome.webview.postMessage('tweet');
+                }};
+
                 newNavItem.appendChild(newLink);
                 navItem.appendChild(newNavItem);
+
+                TweetItem.appendChild(TweetLink);
+                navItem.appendChild(TweetItem);
             }}
         ");
             
@@ -141,6 +155,14 @@ public partial class MainWindow : FluentWindow
         if (message == "profile")
         {
             _webView.Source = new Uri($"https://nitter.net/{settings.Xusername}");
+            return;
+        }
+        
+        if (message == "tweet")
+        {
+            TweetWindow tweetWindow = new TweetWindow();
+            tweetWindow.Show();
+            tweetWindow.Activate();
             return;
         }
 
@@ -247,7 +269,6 @@ public partial class MainWindow : FluentWindow
               _webView.WebMessageReceived += async (s, args) =>
               {
                   var message = args.TryGetWebMessageAsString();
-                  Console.WriteLine("Received message: " + message);
                   await HandleWebMessage(message, data, settings);
               };
       }

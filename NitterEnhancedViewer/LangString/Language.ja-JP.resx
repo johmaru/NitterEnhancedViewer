@@ -75,4 +75,13 @@
     <data name="S_Profile" xml:space="preserve">
         <value>プロフィール</value>
     </data>
+    <data name="S_Tweet" xml:space="preserve">
+        <value>ツイートする</value>
+    </data>
+    <data name="M_NotXLoginOnSetting" xml:space="preserve">
+        <value>設定ウィンドウでのXのログインが完了していません</value>
+    </data>
+    <data name="M_XAlreadyloggin" xml:space="preserve">
+        <value>Xにログイン済みです</value>
+    </data>
 </root>

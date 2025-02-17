@@ -1,12 +1,10 @@
-﻿<ui:FluentWindow x:Class="NitterEnhancedViewer.MainWindow"
+﻿<ui:FluentWindow x:Class="NitterEnhancedViewer.TweetWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:NitterEnhancedViewer"
         mc:Ignorable="d"
-        Loaded="MainWindow_OnLoaded"
-        SizeChanged="MainWindow_OnSizeChanged"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="Default"
@@ -14,21 +12,14 @@
         lex:ResxLocalizationProvider.DefaultDictionary="Language"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" d:DesignHeight="450" d:DesignWidth="800">
-    
+        Loaded="TweetWindow_OnLoaded"
+        Title="TweetWindow" d:DesignHeight="450" d:DesignWidth="800">
     <local:TemplateWindow x:Name="Window" MouseMoveEvent="Window_OnMouseMoveEvent">
         <local:TemplateWindow.CustomContent>
             <Grid>
                 <DockPanel>
-                    <wv2:WebView2 />
+                    <wv2:WebView2/>
                 </DockPanel>
-                
-                <ui:Flyout Placement="Mouse" IsOpen="{Binding IsOpen}">
-                    <StackPanel>
-                        <TextBlock HorizontalAlignment="Left" Text="{lex:Loc M_DidntXaccountSetting}" TextWrapping="WrapWithOverflow"/>
-                        <Button Content="{lex:Loc M_AskOpenSetting}" Click="OpenSetting_OnClick"/>
-                    </StackPanel>
-                </ui:Flyout>
             </Grid>
         </local:TemplateWindow.CustomContent>
     </local:TemplateWindow>
