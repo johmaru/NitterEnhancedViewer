@@ -84,4 +84,19 @@
     <data name="M_XAlreadyloggin" xml:space="preserve">
         <value>Xにログイン済みです</value>
     </data>
+    <data name="S_SavedIconTrue" xml:space="preserve">
+        <value>保存済み</value>
+    </data>
+    <data name="S_SavedIconFalse" xml:space="preserve">
+        <value>セーブする</value>
+    </data>
+    <data name="S_FavoriteList" xml:space="preserve">
+        <value>いいね一覧</value>
+    </data>
+    <data name="S_Message" xml:space="preserve">
+        <value>メッセージ</value>
+    </data>
+    <data name="S_Url" xml:space="preserve">
+        <value>URL</value>
+    </data>
 </root>

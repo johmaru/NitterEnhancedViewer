@@ -150,6 +150,15 @@ namespace NitterEnhancedViewer.LangString {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to いいね一覧.
+        /// </summary>
+        public static string S_FavoriteList {
+            get {
+                return ResourceManager.GetString("S_FavoriteList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 一般.
         /// </summary>
         public static string S_General {
@@ -195,11 +204,38 @@ namespace NitterEnhancedViewer.LangString {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to メッセージ.
+        /// </summary>
+        public static string S_Message {
+            get {
+                return ResourceManager.GetString("S_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to プロフィール.
         /// </summary>
         public static string S_Profile {
             get {
                 return ResourceManager.GetString("S_Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to セーブする.
+        /// </summary>
+        public static string S_SavedIconFalse {
+            get {
+                return ResourceManager.GetString("S_SavedIconFalse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 保存済み.
+        /// </summary>
+        public static string S_SavedIconTrue {
+            get {
+                return ResourceManager.GetString("S_SavedIconTrue", resourceCulture);
             }
         }
         
@@ -236,6 +272,15 @@ namespace NitterEnhancedViewer.LangString {
         public static string S_Tweet {
             get {
                 return ResourceManager.GetString("S_Tweet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL.
+        /// </summary>
+        public static string S_Url {
+            get {
+                return ResourceManager.GetString("S_Url", resourceCulture);
             }
         }
         

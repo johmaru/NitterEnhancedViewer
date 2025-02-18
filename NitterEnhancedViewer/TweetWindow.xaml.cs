@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Web.WebView2.Core;
@@ -85,7 +86,6 @@ public partial class TweetWindow : FluentWindow
             try {
                 const links = document.head.getElementsByTagName('link');
                 for (let i = 0; i < links.length; i++) {
-                    console.log('Link ' + i + ':', links[i].href);
                     if (links[i].rel === 'canonical' && links[i].href.includes('flow/login')) {
                         console.log('Found target link');
                         chrome.webview.postMessage('LOGIN_NOT_DETECTED');
@@ -179,5 +179,12 @@ public partial class TweetWindow : FluentWindow
         {
             Close();
         }
+    }
+
+    private void TweetWindow_OnClosing(object? sender, CancelEventArgs e)
+    {
+        if (_webView == null) return;
+        _webView.Source = new Uri("about:blank");
+        _webView.Dispose();
     }
 }

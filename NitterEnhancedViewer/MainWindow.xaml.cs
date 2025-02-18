@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
@@ -52,6 +53,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 public partial class MainWindow : FluentWindow
 {
     public MainWindowViewModel ViewModel { get;}
+    private bool _devMode;
     
     private static readonly string _nitterUrl = "https://nitter.net/";
     
@@ -79,6 +81,24 @@ public partial class MainWindow : FluentWindow
         return null;
     }
 
+    private static bool IsValidJson(string str)
+    {
+        if (string.IsNullOrWhiteSpace(str))
+        {
+            return false;
+        }
+        
+        try 
+        {
+            JsonDocument.Parse(str);
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
     private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
         try
@@ -88,12 +108,23 @@ public partial class MainWindow : FluentWindow
             this.Height = settingsMain.MainWindowHeight;
 
             var json = await JsonController.LoadSettings();
+            _devMode = json.DevMode;
             
             _webView = FindVisualChild<WebView2>(Window);
             if (_webView == null) return;
+            
+            await _webView.EnsureCoreWebView2Async();
+            
             _webView.Source = new Uri(_nitterUrl);
             _webView.NavigationCompleted += WebViewOnNavigationCompleted;
             _webView.SourceChanged += WebViewOnSourceChanged;
+            _webView.CoreWebView2.ContextMenuRequested += CoreWebView2OnContextMenuRequested;
+            
+            FavoritesWindow.OnClicked.Subscribe(url =>
+            {
+                var absoluteUrl = "https://nitter.net/" + url;
+                _webView.Source = new Uri(absoluteUrl);
+            });
            
             
             if (!string.IsNullOrEmpty(json.Xusername) || !string.IsNullOrEmpty(json.Xpassword)) return;
@@ -109,11 +140,65 @@ public partial class MainWindow : FluentWindow
         }
     }
 
+    private async void CoreWebView2OnContextMenuRequested(object? sender, CoreWebView2ContextMenuRequestedEventArgs e)
+    {
+        try
+        {
+            e.MenuItems.Clear();
+
+            // Add a custom menu item
+            var settingsMenuItem = _webView.CoreWebView2.Environment.CreateContextMenuItem(
+                LanguageController.GetLocalizedValue<string>("S_Settings"),
+                null,
+                CoreWebView2ContextMenuItemKind.Command
+            );
+       
+            //Add a click event to the custom menu item
+            settingsMenuItem.CustomItemSelected += (o, args) =>
+            {
+                SettingWindow settingWindow = new SettingWindow(Window);
+                settingWindow.Show();
+            };
+       
+            // Add Items to the context menu
+            e.MenuItems.Add(settingsMenuItem);
+         
+            /*
+          *  DEV MODE
+          */
+            
+            if ((_devMode))
+            {
+                var devMenuItem = _webView.CoreWebView2.Environment.CreateContextMenuItem(
+                    "DevTools",
+                    null,
+                    CoreWebView2ContextMenuItemKind.Command
+                );
+                devMenuItem.CustomItemSelected += (o, args) =>
+                {
+                    _webView.CoreWebView2.OpenDevToolsWindow();
+                };
+                e.MenuItems.Add(devMenuItem);
+            }
+        }
+        catch (Exception ex)
+        {
+            var err = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            if (err == MessageBoxResult.OK)
+            {
+                Environment.Exit(1);
+            }
+        }
+    }
+
     private async void WebViewOnSourceChanged(object? sender, CoreWebView2SourceChangedEventArgs e)
     {
-        if (_webView != null && _webView.Source.AbsoluteUri.Contains("nitter.net"))
+        if (_webView == null || !_webView.Source.AbsoluteUri.Contains("nitter.net"))
         {
-            var settings = await JsonController.LoadSettings();
+            _webView.Source = new Uri(_nitterUrl);
+        }
+        else
+        {
             await _webView.ExecuteScriptAsync($@"
             const navItem = document.querySelector('.inner-nav');
             if (navItem) {{
@@ -125,6 +210,16 @@ public partial class MainWindow : FluentWindow
                 newLink.onclick = (e) => {{
                     e.preventDefault();
                     window.chrome.webview.postMessage('profile');
+                }};
+
+                const FavoriteItem = document.createElement('div');
+                FavoriteItem.className = 'nav-item';
+                const FavoriteLink = document.createElement('a');
+                FavoriteLink.href = '#';
+                FavoriteLink.textContent = '{LanguageController.GetLocalizedValue<string>("S_FavoriteList")}';
+                FavoriteLink.onclick = (e) => {{
+                    e.preventDefault();
+                    window.chrome.webview.postMessage('favorites');
                 }};
 
                 const TweetItem = document.createElement('div');
@@ -139,18 +234,54 @@ public partial class MainWindow : FluentWindow
 
                 newNavItem.appendChild(newLink);
                 navItem.appendChild(newNavItem);
-
-                TweetItem.appendChild(TweetLink);
+                navItem.appendChild(FavoriteItem);
+                FavoriteItem.appendChild(FavoriteLink);
                 navItem.appendChild(TweetItem);
+                TweetItem.appendChild(TweetLink);
             }}
         ");
-            
         }
+        
     }
     
     private async Task HandleWebMessage(string? message, List<NitterData> data, SettingJson  settings)
     {
         if (message == null) return;
+
+        if (IsValidJson(message))
+        {
+            try
+            {
+                var parsedMessage = JsonSerializer.Deserialize<Dictionary<string, String>>(message);
+                if (parsedMessage == null) return;
+                var tweetHref = parsedMessage["tweetHref"];
+                var tweetMessage = parsedMessage["message"];
+                var existingData = data.FirstOrDefault(x => x.Url == tweetHref);
+                
+                if (existingData != null)
+                {
+                    await JsonController.RemoveNitterData(existingData);
+                    data.Remove(existingData);
+                }
+                else
+                {
+                    var newData = new NitterData
+                    {
+                        Message = tweetMessage,
+                        Url = tweetHref,
+                        FavoriteTime = DateTime.Now,
+                        IsFavorite = true
+                    };
+                    await JsonController.AppendNitterData(newData);
+                    data.Add(newData);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
         if (message == "profile")
         {
@@ -165,28 +296,20 @@ public partial class MainWindow : FluentWindow
             tweetWindow.Activate();
             return;
         }
-
-        if (message.StartsWith("save:"))
+        
+        if (message == "favorites")
         {
-            var tweetId = message.Split(':')[1];
-            var existingData = data.FirstOrDefault(x => x.Url == tweetId);
-
-            if (existingData != null)
+            if (Application.Current.Windows.OfType<FavoritesWindow>().Any())
             {
-                await JsonController.RemoveNitterData(existingData);
-                data.Remove(existingData);
+                Application.Current.Windows.OfType<FavoritesWindow>().First().Activate();
             }
             else
             {
-                var newData = new NitterData
-                {
-                    Url = tweetId,
-                    FavoriteTime = DateTime.Now,
-                    IsFavorite = true
-                };
-                await JsonController.AppendNitterData(newData);
-                data.Add(newData);
+                FavoritesWindow favoritesWindow = new FavoritesWindow();
+                favoritesWindow.Show();
+                favoritesWindow.Activate();
             }
+            return;
         }
     }
 
@@ -198,6 +321,22 @@ public partial class MainWindow : FluentWindow
       {
           var settings = await JsonController.LoadSettings();
           var data = await JsonController.LoadNitterData();
+          
+          await _webView.ExecuteScriptAsync($@"
+    window.updateFavoriteUrls = function(newUrls) {{
+        window.favoriteUrls = newUrls;
+      
+        document.querySelectorAll('.icon-heart').forEach(icon => {{
+            const tweetHref = icon.closest('.timeline-item').querySelector('.tweet-link').getAttribute('href');
+            const normalizedHref = tweetHref.startsWith('/') ? tweetHref.substring(1) : tweetHref;
+            const isSaved = newUrls.includes(normalizedHref);
+            icon.style.color = isSaved ? '#e0245e' : '#00BA7C';
+            icon.title = isSaved ? 
+                '{LanguageController.GetLocalizedValue<string>("S_SavedIconTrue")}' : 
+                '{LanguageController.GetLocalizedValue<string>("S_SavedIconFalse")}';
+        }});
+    }};
+");
           
          await _webView.ExecuteScriptAsync($@"
         const timelineItems = document.querySelectorAll('.timeline-item');
@@ -231,7 +370,15 @@ public partial class MainWindow : FluentWindow
             const tweetLink = item.querySelector('a.tweet-link');
             if (!tweetLink) return;
 
-            const tweetHref = tweetLink.getAttribute('href');
+            const tweetBody = item.querySelector('.tweet-body');
+            if (!tweetBody) return;
+
+            const tweetContent = tweetBody.querySelector('.tweet-content.media-body');
+
+            if (!tweetContent) return;
+
+            const rawHref = tweetLink.getAttribute('href');
+            const tweetHref = rawHref.startsWith('/') ? rawHref.substring(1) : rawHref;
             const tweetStats = item.querySelector('.tweet-stats');
             if (!tweetStats) return;
 
@@ -248,16 +395,23 @@ public partial class MainWindow : FluentWindow
             const saveIcon = document.createElement('span');
             const isSaved = favoriteUrls.includes(tweetHref);
             saveIcon.className = 'icon-heart';
-            saveIcon.title = isSaved ? '保存済み' : '保存';
-            saveIcon.style.color = isSaved ? '#e0245e' : '';
+            saveIcon.title = isSaved ? '{LanguageController.GetLocalizedValue<string>("S_SavedIconTrue")}' : '{LanguageController.GetLocalizedValue<string>("S_SavedIconFalse")}';;
+            saveIcon.style.color = isSaved ? '#e0245e' : '#00BA7C';
 
             iconWrapper.onclick = (e) => {{
                 e.preventDefault();
                 e.stopPropagation();
-                window.chrome.webview.postMessage(`save:${{tweetHref}}`);
-                const newIsSaved = saveIcon.style.color === '';
-                saveIcon.style.color = newIsSaved ? '#e0245e' : '';
-                saveIcon.title = newIsSaved ? '保存済み' : '保存';
+                window.chrome.webview.postMessage(JSON.stringify({{
+                    action: 'save',
+                    tweetHref: tweetHref,
+                    message: tweetContent.innerText
+                }}));
+                const currentColor = saveIcon.style.color;
+                const isCurrentlySaved = currentColor === '#e0245e';
+                 saveIcon.style.color = isCurrentlySaved ? '#00BA7C' : '#e0245e';
+                saveIcon.title = isCurrentlySaved ? 
+            '{LanguageController.GetLocalizedValue<string>("S_SavedIconFalse")}' : 
+            '{LanguageController.GetLocalizedValue<string>("S_SavedIconTrue")}';
             }};
 
         iconWrapper.appendChild(saveIcon);
@@ -269,7 +423,10 @@ public partial class MainWindow : FluentWindow
               _webView.WebMessageReceived += async (s, args) =>
               {
                   var message = args.TryGetWebMessageAsString();
+                    if (message == null) return;
                   await HandleWebMessage(message, data, settings);
+                  var updatedUrls = JsonSerializer.Serialize(data.Select(x => x.Url));
+                  await _webView.ExecuteScriptAsync($@"window.updateFavoriteUrls({updatedUrls});");
               };
       }
     }
@@ -306,5 +463,10 @@ public partial class MainWindow : FluentWindow
        SettingWindow settingWindow = new SettingWindow(Window);
          settingWindow.Show();
          ViewModel.IsOpen = false;
+    }
+
+    private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
+    {
+       if(_webView != null) _webView.Dispose();
     }
 }

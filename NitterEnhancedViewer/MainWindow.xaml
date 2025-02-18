@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Loaded="MainWindow_OnLoaded"
         SizeChanged="MainWindow_OnSizeChanged"
+        Closing="MainWindow_OnClosing"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="Default"

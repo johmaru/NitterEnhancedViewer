@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3116-prerelease" />
+      <PackageReference Include="System.Reactive" Version="6.0.1" />
       <PackageReference Include="System.Text.Json" Version="9.0.2" />
       <PackageReference Include="WPF-UI" Version="4.0.0" />
       <PackageReference Include="WPFLocalizeExtension" Version="3.10.0" />

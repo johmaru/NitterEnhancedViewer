@@ -70,8 +70,15 @@ public partial class TemplateWindow : UserControl, INotifyPropertyChanged
     
     private void Settings_OnClick(object sender, RoutedEventArgs e)
     {
-        SettingWindow settingWindow = new SettingWindow(this);
-        settingWindow.Show();
+        if (Application.Current.Windows.OfType<SettingWindow>().Any())
+        {
+            Application.Current.Windows.OfType<SettingWindow>().First().Activate();
+        }
+        else
+        {
+            SettingWindow settingWindow = new SettingWindow(this);
+            settingWindow.Show();
+        }
     }
 
     private void Close_OnClick(object sender, RoutedEventArgs e)

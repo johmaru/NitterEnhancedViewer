@@ -84,4 +84,19 @@
     <data name="M_XAlreadyloggin" xml:space="preserve">
         <value>Already logged in to X</value>
     </data>
+    <data name="S_SavedIconTrue" xml:space="preserve">
+        <value>Saved</value>
+    </data>
+    <data name="S_SavedIconFalse" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="S_FavoriteList" xml:space="preserve">
+        <value>Favorites</value>
+    </data>
+    <data name="S_Message" xml:space="preserve">
+        <value>Message</value>
+    </data>
+    <data name="S_Url" xml:space="preserve">
+        <value>Url</value>
+    </data>
 </root>

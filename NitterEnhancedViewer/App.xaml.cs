@@ -42,11 +42,11 @@ public partial class App : Application
         if (!Directory.Exists("data"))
         {
             Directory.CreateDirectory("data");
-            
-            if (!File.Exists("data/nitterdata.json"))
-            {
-                await JsonController.SaveNitterData(new List<NitterData>());
-            }
+        }
+        
+        if (!File.Exists("data/nitterdata.json"))
+        {
+            await JsonController.SaveNitterData(new List<NitterData>());
         }
 
         await LanguageController.Initialize();

@@ -150,6 +150,15 @@ namespace NitterEnhancedViewer.LangString {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Favorites.
+        /// </summary>
+        public static string S_FavoriteList {
+            get {
+                return ResourceManager.GetString("S_FavoriteList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string S_General {
@@ -195,11 +204,38 @@ namespace NitterEnhancedViewer.LangString {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string S_Message {
+            get {
+                return ResourceManager.GetString("S_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string S_Profile {
             get {
                 return ResourceManager.GetString("S_Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string S_SavedIconFalse {
+            get {
+                return ResourceManager.GetString("S_SavedIconFalse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved.
+        /// </summary>
+        public static string S_SavedIconTrue {
+            get {
+                return ResourceManager.GetString("S_SavedIconTrue", resourceCulture);
             }
         }
         
@@ -236,6 +272,15 @@ namespace NitterEnhancedViewer.LangString {
         public static string S_Tweet {
             get {
                 return ResourceManager.GetString("S_Tweet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url.
+        /// </summary>
+        public static string S_Url {
+            get {
+                return ResourceManager.GetString("S_Url", resourceCulture);
             }
         }
         

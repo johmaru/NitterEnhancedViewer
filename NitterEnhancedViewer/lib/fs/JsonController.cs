@@ -20,17 +20,33 @@ public class SettingJson
    public Color DockColor { get; set; } = Colors.Gray;
    
    public string? Language { get; set; } = "en-US";
+   
+   public bool DevMode { get; set; }
 }
 
 public class NitterData
 {
+   public string? Message { get; set; }
    public string? Url { get; set; }
    public DateTime FavoriteTime { get; set; }
    public bool IsFavorite { get; set; }
+   
+   public override bool Equals(object? obj)
+   {
+      if (obj is not NitterData other) return false;
+      return Url == other.Url;
+   }
+
+   public override int GetHashCode()
+   {
+      return Url?.GetHashCode() ?? 0;
+   }
 }
 
 public abstract class JsonController
 {
+   
+   private static readonly object _lockObject = new();
    
    internal static async ValueTask <SettingJson>  LoadSettings()
    {
@@ -103,6 +119,12 @@ public abstract class JsonController
          settings.MemoryTab = defaultSettings.MemoryTab;
          modified = true;
       }
+      
+      if (!root.TryGetProperty("DevMode", out _))
+      {
+         settings.DevMode = defaultSettings.DevMode;
+         modified = true;
+      }
 
       if (modified)
       {
@@ -154,7 +176,13 @@ public abstract class JsonController
          DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
          WriteIndented = true
       };
-      await File.WriteAllTextAsync("data/nitterdata.json", JsonSerializer.Serialize(nitterData, options));
+      using var fileStream = new FileStream(
+         "data/nitterdata.json", 
+         FileMode.Create, 
+         FileAccess.Write, 
+         FileShare.None);
+        
+      await JsonSerializer.SerializeAsync(fileStream, nitterData, options);
    }
    
    public static async ValueTask<bool> AppendNitterData(NitterData nitterData)
