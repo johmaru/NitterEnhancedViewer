@@ -93,10 +93,10 @@
     <data name="S_FavoriteList" xml:space="preserve">
         <value>いいね一覧</value>
     </data>
-    <data name="S_Message" xml:space="preserve">
-        <value>メッセージ</value>
+    <data name="S_IncludeColonMessage" xml:space="preserve">
+        <value>メッセージ :</value>
     </data>
-    <data name="S_Url" xml:space="preserve">
-        <value>URL</value>
+    <data name="S_IncludeColonUrl" xml:space="preserve">
+        <value>URL :</value>
     </data>
 </root>

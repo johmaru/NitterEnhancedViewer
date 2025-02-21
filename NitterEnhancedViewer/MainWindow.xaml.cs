@@ -124,6 +124,7 @@ public partial class MainWindow : FluentWindow
             {
                 var absoluteUrl = "https://nitter.net/" + url;
                 _webView.Source = new Uri(absoluteUrl);
+                this.Activate();
             });
            
             
@@ -326,7 +327,7 @@ public partial class MainWindow : FluentWindow
     window.updateFavoriteUrls = function(newUrls) {{
         window.favoriteUrls = newUrls;
       
-        document.querySelectorAll('.icon-heart').forEach(icon => {{
+        document.querySelectorAll('.custom-heart').forEach(icon => {{
             const tweetHref = icon.closest('.timeline-item').querySelector('.tweet-link').getAttribute('href');
             const normalizedHref = tweetHref.startsWith('/') ? tweetHref.substring(1) : tweetHref;
             const isSaved = newUrls.includes(normalizedHref);
@@ -344,6 +345,36 @@ public partial class MainWindow : FluentWindow
 
         const style = document.createElement('style');
         style.textContent = `
+        @font-face {{
+        font-family: 'fontello';
+        src: url('/fonts/fontello.eot?21002321');
+        src: url('/fonts/fontello.eot?21002321#iefix') format('embedded-opentype'),
+             url('/fonts/fontello.woff2?21002321') format('woff2'),
+             url('/fonts/fontello.woff?21002321') format('woff'),
+             url('/fonts/fontello.ttf?21002321') format('truetype'),
+             url('/fonts/fontello.svg?21002321#fontello') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }}
+
+    [class^='icon-']:before, [class*=' icon-']:before {{
+        font-family: 'fontello';
+        font-style: normal;
+        font-weight: normal;
+        speak: never;
+        display: inline-block;
+        text-decoration: inherit;
+        width: 1em;
+        text-align: center;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }}
+
+    .icon-heart:before {{ content: '\\2665'; }}
+
         .tweet-link \{{
             pointer-events: auto;
             display: inline-block;
@@ -363,6 +394,25 @@ public partial class MainWindow : FluentWindow
             z-index: 9999;
             pointer-events: auto;
         \}}
+        .custom-heart {{
+    font-family: 'fontello';
+    font-style: normal;
+    font-weight: normal;
+    speak: never;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: inherit;
+}}
+ .custom-heart:before {{
+        content: '\\2665';
+    }}
       `;
         document.head.appendChild(style);
 
@@ -394,7 +444,7 @@ public partial class MainWindow : FluentWindow
 
             const saveIcon = document.createElement('span');
             const isSaved = favoriteUrls.includes(tweetHref);
-            saveIcon.className = 'icon-heart';
+            saveIcon.className = 'custom-heart';
             saveIcon.title = isSaved ? '{LanguageController.GetLocalizedValue<string>("S_SavedIconTrue")}' : '{LanguageController.GetLocalizedValue<string>("S_SavedIconFalse")}';;
             saveIcon.style.color = isSaved ? '#e0245e' : '#00BA7C';
 
@@ -408,7 +458,7 @@ public partial class MainWindow : FluentWindow
                 }}));
                 const currentColor = saveIcon.style.color;
                 const isCurrentlySaved = currentColor === '#e0245e';
-                 saveIcon.style.color = isCurrentlySaved ? '#00BA7C' : '#e0245e';
+                saveIcon.style.color = isCurrentlySaved ? '#00BA7C' : '#e0245e';
                 saveIcon.title = isCurrentlySaved ? 
             '{LanguageController.GetLocalizedValue<string>("S_SavedIconFalse")}' : 
             '{LanguageController.GetLocalizedValue<string>("S_SavedIconTrue")}';

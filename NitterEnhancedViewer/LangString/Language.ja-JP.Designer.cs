@@ -168,6 +168,24 @@ namespace NitterEnhancedViewer.LangString {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to メッセージ :.
+        /// </summary>
+        public static string S_IncludeColonMessage {
+            get {
+                return ResourceManager.GetString("S_IncludeColonMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL :.
+        /// </summary>
+        public static string S_IncludeColonUrl {
+            get {
+                return ResourceManager.GetString("S_IncludeColonUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 言語.
         /// </summary>
         public static string S_Language {
@@ -200,15 +218,6 @@ namespace NitterEnhancedViewer.LangString {
         public static string S_MemoryTab {
             get {
                 return ResourceManager.GetString("S_MemoryTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to メッセージ.
-        /// </summary>
-        public static string S_Message {
-            get {
-                return ResourceManager.GetString("S_Message", resourceCulture);
             }
         }
         
@@ -272,15 +281,6 @@ namespace NitterEnhancedViewer.LangString {
         public static string S_Tweet {
             get {
                 return ResourceManager.GetString("S_Tweet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to URL.
-        /// </summary>
-        public static string S_Url {
-            get {
-                return ResourceManager.GetString("S_Url", resourceCulture);
             }
         }
         

@@ -26,10 +26,10 @@
                                                                                     <ColumnDefinition Width="*"/>
                                                                             </Grid.ColumnDefinitions>
 
-                                                                            <ui:TextBlock Text="{lex:Loc S_Message :}" FontWeight="Bold" Grid.Column="0" Margin="0,0,5,0"/>
+                                                                            <ui:TextBlock Text="{lex:Loc S_IncludeColonMessage}" FontWeight="Bold" Grid.Column="0" Margin="0,0,5,0"/>
                                                                             <ui:TextBlock Text="{Binding Message}" Grid.Column="1" TextWrapping="Wrap"/>
 
-                                                                            <ui:TextBlock Text="{lex:Loc S_Url :}" FontWeight="Bold" Grid.Column="0" Margin="0,30,5,0" Grid.Row="1"/>
+                                                                            <ui:TextBlock Text="{lex:Loc S_IncludeColonUrl}" FontWeight="Bold" Grid.Column="0" Margin="0,30,5,0" Grid.Row="1"/>
                                                                             <ui:TextBlock Text="{Binding Url}" Grid.Column="1" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown" MouseEnter="URL_OnMouseEnter" MouseLeave="URL_OnMouseLeave" Margin="0,30,0,0" Grid.Row="1" TextWrapping="Wrap"/>
                                                                     </Grid>
                                                             </Border>
