@@ -5,8 +5,6 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-permissions:
-  contents: write
    
 
 jobs:
@@ -48,12 +46,9 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
-    - name: Debug run_number # github.run_number の値を確認
-      run: echo "Run Number:${{ github.run_number }}"
-
     - name: Determine version
       id: determine_version
-      run: echo ::set-output name=version::1.0.${{ github.run_number }}
+      run: echo ::set-output name=version::1.0.$(date +%Y%m%d%H%M%S)
 
     - name: Debug version output
       run: echo "Version is:${{ steps.determine_version.outputs.version }}"
