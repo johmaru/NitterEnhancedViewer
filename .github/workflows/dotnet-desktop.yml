@@ -48,7 +48,7 @@ jobs:
 
     - name: Determine version
       id: determine_version
-      run: echo ::set-output name=version::1.0.$(date +%Y%m%d%H%M%S)
+      run: echo "version=1.0.$(powershell -command \"(Get-Date -Format yyyyMMddHHmmss)\")" >> $GITHUB_ENV
 
     - name: Debug version output
       run: echo "Version is:${{ steps.determine_version.outputs.version }}"
@@ -59,8 +59,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.determine_version.outputs.version }}
-        release_name: v${{ steps.determine_version.outputs.version }}
+        tag_name: v${{ env.version }}
+        release_name: v${{ env.version }}
         draft: false
         prerelease: false
 
