@@ -64,13 +64,13 @@ jobs:
       run: |
         $timestamp = pwsh -command '(Get-Date -Format yyyyMMddHHmmss)'
         Write-Host "タイムスタンプ: $timestamp"
-
-        if ([string]::IsNullOrEmpty($Env:GITHUB_ENV)) {
-          Write-Warning "GITHUB_ENV が空です！バージョン情報を設定できません。"
-          # もしエラーでワークフローを終了させたい場合は、以下を追加 (必要に応じて)
-          # throw "GITHUB_ENV is not set!" 
+        # Add-Content の -Path を ${Env:GITHUB_ENV} に変更
+        Add-Content -Path ${Env:GITHUB_ENV} -Value "version=1.0.$timestamp"
+        # (念のため) ファイルが存在するか確認
+        if (Test-Path -Path ${Env:GITHUB_ENV}) {
+          Write-Host "GITHUB_ENV ファイルは存在します。"
         } else {
-          Add-Content -Path $GITHUB_ENV -Value "version=1.0.$timestamp"
+          Write-Warning "GITHUB_ENV ファイルが存在しません！"
         }
   
     - name: Debug version output
