@@ -49,7 +49,7 @@ jobs:
     - name: Determine version
       id: determine_version
       run: echo "version=1.0.$(powershell -command \"(Get-Date -Format yyyyMMddHHmmss)\")" >> $GITHUB_ENV
-
+  
     - name: Debug version output
       run: echo "Version is:${{ steps.determine_version.outputs.version }}"
 
