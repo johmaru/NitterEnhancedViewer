@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [Release]
 
     runs-on: windows-latest
 
@@ -48,14 +48,18 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
+    - name: Determine version
+      id: determine_version
+      run: echo ::set-output name=version::1.0.$(date +%s)    
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref_name }}
-        release_name: Release ${{ github.ref_name }}
+        tag_name: v${{ steps.determine_version.outputs.version }}
+        release_name: Release v${{ steps.determine_version.outputs.version }}
         draft: false
         prerelease: false  
 
