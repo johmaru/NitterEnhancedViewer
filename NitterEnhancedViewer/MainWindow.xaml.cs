@@ -200,6 +200,7 @@ public partial class MainWindow : FluentWindow
         }
         else
         {
+            // Add custom navigation items to the nitter.net page
             await _webView.ExecuteScriptAsync($@"
             const navItem = document.querySelector('.inner-nav');
             if (navItem) {{
@@ -223,6 +224,16 @@ public partial class MainWindow : FluentWindow
                     window.chrome.webview.postMessage('favorites');
                 }};
 
+                const TimelineItem = document.createElement('div');
+                TimelineItem.className = 'nav-item';
+                const TimelineLink = document.createElement('a');
+                TimelineLink.href = '#';
+                TimelineLink.textContent = '{LanguageController.GetLocalizedValue<string>("S_Timeline")}';
+                TimelineLink.onclick = (e) => {{
+                    e.preventDefault();
+                    window.chrome.webview.postMessage('timeline');
+                }};
+
                 const TweetItem = document.createElement('div');
                 TweetItem.className = 'nav-item';
                 const TweetLink = document.createElement('a');
@@ -233,10 +244,15 @@ public partial class MainWindow : FluentWindow
                     window.chrome.webview.postMessage('tweet');
                 }};
 
-                newNavItem.appendChild(newLink);
                 navItem.appendChild(newNavItem);
+                newNavItem.appendChild(newLink);
+
                 navItem.appendChild(FavoriteItem);
                 FavoriteItem.appendChild(FavoriteLink);
+
+                navItem.appendChild(TimelineItem);
+                TimelineItem.appendChild(TimelineLink);
+
                 navItem.appendChild(TweetItem);
                 TweetItem.appendChild(TweetLink);
             }}
@@ -284,33 +300,72 @@ public partial class MainWindow : FluentWindow
             }
         }
 
-        if (message == "profile")
+        switch (message)
         {
-            _webView.Source = new Uri($"https://nitter.net/{settings.Xusername}");
-            return;
-        }
-        
-        if (message == "tweet")
-        {
-            TweetWindow tweetWindow = new TweetWindow();
-            tweetWindow.Show();
-            tweetWindow.Activate();
-            return;
-        }
-        
-        if (message == "favorites")
-        {
-            if (Application.Current.Windows.OfType<FavoritesWindow>().Any())
+            case "profile":
+                if (string.IsNullOrEmpty(settings.Xusername))
+                {
+                    var msg = MessageBox.Show(LanguageController.GetLocalizedValue<string>("M_DidntXaccountSettingAndAskOpen"),
+                        "Warning", MessageBoxButton.YesNo);
+                    if (msg == MessageBoxResult.Yes)
+                    {
+                        if (Application.Current.Windows.OfType<SettingWindow>().Any())
+                        {
+                            Application.Current.Windows.OfType<SettingWindow>().First().Activate();
+                        }
+                        else
+                        {
+                            SettingWindow settingWindow = new SettingWindow(Window);
+                            settingWindow.Show();
+                            settingWindow.Activate();
+                        }
+                    }
+                }
+                _webView.Source = new Uri($"https://nitter.net/{settings.Xusername}");
+                return;
+
+            case "timeline":
             {
-                Application.Current.Windows.OfType<FavoritesWindow>().First().Activate();
+                if (Application.Current.Windows.OfType<TimelineWindow>().Any())
+                {
+                    Application.Current.Windows.OfType<TimelineWindow>().First().Activate();
+                }
+                else
+                {
+                    TimelineWindow timelineWindow = new TimelineWindow();
+                    timelineWindow.Show();
+                    timelineWindow.Activate();
+                }
+                return;
             }
-            else
+            case "tweet":
             {
-                FavoritesWindow favoritesWindow = new FavoritesWindow();
-                favoritesWindow.Show();
-                favoritesWindow.Activate();
+               if (Application.Current.Windows.OfType<TweetWindow>().Any())
+               {
+                   Application.Current.Windows.OfType<TweetWindow>().First().Activate();
+               }
+               else
+               {
+                   TweetWindow tweetWindow = new TweetWindow();
+                   tweetWindow.Show();
+                   tweetWindow.Activate();
+               }
+               return;
             }
-            return;
+            case "favorites":
+            {
+                if (Application.Current.Windows.OfType<FavoritesWindow>().Any())
+                {
+                    Application.Current.Windows.OfType<FavoritesWindow>().First().Activate();
+                }
+                else
+                {
+                    FavoritesWindow favoritesWindow = new FavoritesWindow();
+                    favoritesWindow.Show();
+                    favoritesWindow.Activate();
+                }
+                return;
+            }
         }
     }
 
@@ -323,6 +378,8 @@ public partial class MainWindow : FluentWindow
           var settings = await JsonController.LoadSettings();
           var data = await JsonController.LoadNitterData();
           
+          
+          // Inject custom css and js
           await _webView.ExecuteScriptAsync($@"
     window.updateFavoriteUrls = function(newUrls) {{
         window.favoriteUrls = newUrls;
@@ -339,6 +396,7 @@ public partial class MainWindow : FluentWindow
     }};
 ");
           
+          // Add save button to each tweet
          await _webView.ExecuteScriptAsync($@"
         const timelineItems = document.querySelectorAll('.timeline-item');
         const favoriteUrls = {JsonSerializer.Serialize(data.Select(x => x.Url))};

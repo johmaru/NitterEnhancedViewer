@@ -99,4 +99,10 @@
     <data name="S_IncludeColonUrl" xml:space="preserve">
         <value>Url :</value>
     </data>
+    <data name="M_DidntXaccountSettingAndAskOpen" xml:space="preserve">
+        <value>You Didn't set Xaccount to setting.Is immediately to open setting ?</value>
+    </data>
+    <data name="S_Timeline" xml:space="preserve">
+        <value>Timeline</value>
+    </data>
 </root>

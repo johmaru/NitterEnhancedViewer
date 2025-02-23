@@ -78,6 +78,15 @@ namespace NitterEnhancedViewer.LangString {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You Didn&apos;t set Xaccount to setting.Is immediately to open setting ?.
+        /// </summary>
+        public static string M_DidntXaccountSettingAndAskOpen {
+            get {
+                return ResourceManager.GetString("M_DidntXaccountSettingAndAskOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You aren&apos;t complete XLogin on setting.
         /// </summary>
         public static string M_NotXLoginOnSetting {
@@ -272,6 +281,15 @@ namespace NitterEnhancedViewer.LangString {
         public static string S_Theme {
             get {
                 return ResourceManager.GetString("S_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeline.
+        /// </summary>
+        public static string S_Timeline {
+            get {
+                return ResourceManager.GetString("S_Timeline", resourceCulture);
             }
         }
         
