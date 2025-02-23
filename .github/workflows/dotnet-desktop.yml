@@ -50,7 +50,7 @@ jobs:
 
     - name: Determine version
       id: determine_version
-      run: echo ::set-output name=version::1.0.$(date +%s)    
+      run: echo "version=1.0.$(date +%s)" >> $GITHUB_ENV
 
     - name: Create Release
       id: create_release
@@ -58,10 +58,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.determine_version.outputs.version }}
-        release_name: Release v${{ steps.determine_version.outputs.version }}
+        tag_name: v${{ env.version }}
+        release_name: Release v${{ env.version }}
         draft: false
-        prerelease: false  
+        prerelease: false
 
     - name: Zip the build artifacts
       run: |
