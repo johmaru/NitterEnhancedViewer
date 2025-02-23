@@ -46,12 +46,32 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
+    - name: Debug GITHUB_ENV (再確認・修正版)
+      shell: pwsh
+      run: |
+        Write-Host "GITHUB_ENV のパス (変数展開): $GITHUB_ENV"
+        Write-Host "GITHUB_ENV のパス (環境変数): ${Env:GITHUB_ENV}" 
+        if ([string]::IsNullOrEmpty($Env:GITHUB_ENV)) {
+          Write-Warning "GITHUB_ENV は空または null です！"
+        } else {
+          Write-Host "GITHUB_ENV は設定されています。"
+          Get-Content -Path ${Env:GITHUB_ENV} 
+        }    
+
     - name: Determine version
       id: determine_version
+      shell: pwsh
       run: |
         $timestamp = pwsh -command '(Get-Date -Format yyyyMMddHHmmss)'
         Write-Host "タイムスタンプ: $timestamp"
-        Add-Content -Path $GITHUB_ENV -Value "version=1.0.$timestamp"
+
+        if ([string]::IsNullOrEmpty($Env:GITHUB_ENV)) {
+          Write-Warning "GITHUB_ENV が空です！バージョン情報を設定できません。"
+          # もしエラーでワークフローを終了させたい場合は、以下を追加 (必要に応じて)
+          # throw "GITHUB_ENV is not set!" 
+        } else {
+          Add-Content -Path $GITHUB_ENV -Value "version=1.0.$timestamp"
+        }
   
     - name: Debug version output
       run: echo "Version is:${{ steps.determine_version.outputs.version }}"
