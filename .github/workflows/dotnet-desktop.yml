@@ -48,8 +48,10 @@ jobs:
 
     - name: Determine version
       id: determine_version
-      run: Add-Content -Path $GITHUB_ENV -Value "version=1.0.$(pwsh -command \"(Get-Date -Format yyyyMMddHHmmss)\")"
-      shell: pwsh
+      run: |
+        $timestamp = pwsh -command '(Get-Date -Format yyyyMMddHHmmss)'
+        Write-Host "タイムスタンプ: $timestamp"
+        Add-Content -Path $GITHUB_ENV -Value "version=1.0.$timestamp"
   
     - name: Debug version output
       run: echo "Version is:${{ steps.determine_version.outputs.version }}"
